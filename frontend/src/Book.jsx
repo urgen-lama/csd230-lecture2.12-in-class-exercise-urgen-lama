@@ -1,6 +1,9 @@
 import { useState } from 'react';
+import { useAuth } from './provider/AuthProvider'; // 1. Hook into our Global Context
 
 function Book({ id, title, author, price, onDelete, onUpdate }) {
+    const { isAdmin } = useAuth(); // 2. Extract admin status
+
     const [isEditing, setIsEditing] = useState(false);
     const [tempTitle, setTempTitle] = useState(title);
     const [tempAuthor, setTempAuthor] = useState(author);
@@ -36,13 +39,16 @@ function Book({ id, title, author, price, onDelete, onUpdate }) {
                 <h3>{title}</h3>
                 <p><strong>Author:</strong> {author} | <strong>Price:</strong> ${Number(price).toFixed(2)}</p>
             </div>
-            <div className="book-actions">
-                <button onClick={() => setIsEditing(true)} style={{ backgroundColor: '#ffc107', marginRight: '5px', cursor: 'pointer' }}>Edit</button>
-                <button onClick={() => onDelete(id)} style={{ backgroundColor: '#ff4444', color: 'white', cursor: 'pointer' }}>Delete</button>
-            </div>
+
+            {/* 3. RBAC UI PRUNING: Only render actions if the user is an Administrator */}
+            {isAdmin && (
+                <div className="book-actions">
+                    <button onClick={() => setIsEditing(true)} style={{ backgroundColor: '#ffc107', marginRight: '5px', cursor: 'pointer' }}>Edit</button>
+                    <button onClick={() => onDelete(id)} style={{ backgroundColor: '#ff4444', color: 'white', cursor: 'pointer' }}>Delete</button>
+                </div>
+            )}
         </div>
     );
 }
 
 export default Book;
-
