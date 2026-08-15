@@ -1,0 +1,9 @@
+# Never ship host-built dependencies into the image
+**/node_modules
+**/dist
+
+# Build artifacts and repo metadata
+target/
+.git
+.idea
+*.iml

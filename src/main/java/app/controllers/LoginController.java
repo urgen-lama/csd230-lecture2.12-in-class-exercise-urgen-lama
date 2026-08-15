@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class LoginController {
 
+    // Commented out to prevent conflict with React's SPA routes
     @GetMapping("/login")
     public String login() {
-        // This returns the name of the template: src/main/resources/templates/login.html
         return "login";
     }
 }
