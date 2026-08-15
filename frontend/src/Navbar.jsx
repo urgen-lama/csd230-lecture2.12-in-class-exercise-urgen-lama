@@ -18,14 +18,15 @@ function NavBar({ username, onLogout }) {
 
     const linkGroupStyle = {
         display: 'flex',
-        gap: '20px'
+        gap: '18px',
+        flexWrap: 'wrap'
     };
 
     const linkStyle = {
         color: 'white',
         textDecoration: 'none',
         fontWeight: 'bold',
-        fontSize: '1.1rem'
+        fontSize: '1.05rem'
     };
 
     const logoutButtonStyle = {
@@ -45,10 +46,20 @@ function NavBar({ username, onLogout }) {
                 <Link to="/" style={linkStyle}>🏠 Home</Link>
                 <Link to="/inventory" style={linkStyle}>📚 View Inventory</Link>
 
-                {/* Conditional RBAC rendering */}
+                {/* Conditional RBAC rendering - books */}
                 {isAdmin && (
                     <Link to="/add" style={{ ...linkStyle, color: '#ffc107' }}>
                         ➕ Admin: Add Book
+                    </Link>
+                )}
+
+                {/* LAB 5: NICHE DEPARTMENT */}
+                <Link to="/niche" style={linkStyle}>🎸 Instruments</Link>
+
+                {/* Conditional RBAC rendering - niche */}
+                {isAdmin && (
+                    <Link to="/niche/add" style={{ ...linkStyle, color: '#ffc107' }}>
+                        ➕ Admin: Add Instrument
                     </Link>
                 )}
             </div>
@@ -57,7 +68,6 @@ function NavBar({ username, onLogout }) {
                <span style={{ fontSize: '0.9rem', color: '#ccc' }}>
                    User: <strong style={{ color: 'white' }}>{username}</strong>
                </span>
-
                 <button
                     onClick={onLogout}
                     style={logoutButtonStyle}
